@@ -1,7 +1,6 @@
-import maleImg from "../assets/products/male.jpg";
-import femaleImg from "../assets/products/female.jpg";
-import unisexImg from "../assets/products/unisex.jpg";
-
+<div className="placeholder-image">
+  <span>{product.category}</span>
+</div>
 
 export const products = [
   // Male Fragrances
@@ -103,7 +102,6 @@ export const products = [
   { id: "female-92", dotNo: 92, category: "Female", inspiredBy: "Escada - Cherry In The Air", name: "Cherry In The Air", variant: "Crimson Breeze", size: "50ml", price: 200 },
 
   // Continue below with remaining Female + Unisex items
-];
   // Remaining Female Fragrances
   { id: "female-168", dotNo: 168, category: "Female", inspiredBy: "Y.S.L - Black Opium", name: "Black Opium", variant: "Dark Opium", size: "50ml", price: 300 },
   { id: "female-172b", dotNo: 172, category: "Female", inspiredBy: "Lancome - La Vie Est Belle", name: "La Vie Est Belle", variant: "Beautiful Life", size: "50ml", price: 300 },
