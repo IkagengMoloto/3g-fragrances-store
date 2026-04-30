@@ -1,7 +1,3 @@
-<div className="placeholder-image">
-  <span>{product.category}</span>
-</div>
-
 export const products = [
   // Male Fragrances
   { id: "male-164", dotNo: 164, category: "Male", inspiredBy: "Amouage - Reflection Man", name: "Reflection Man", variant: "Echo Man", size: "50ml", price: 300 },
