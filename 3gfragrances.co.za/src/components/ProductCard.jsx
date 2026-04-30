@@ -1,5 +1,5 @@
 function ProductCard({ product }) {
-  const whatsappNumber = "27848891554";
+  const whatsappNumber = "27727174892";
 
   const message = `Hi 3G Fragrances, I would like to order:
 
