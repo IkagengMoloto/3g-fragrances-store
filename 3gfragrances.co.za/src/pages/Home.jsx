@@ -16,7 +16,7 @@ function Home() {
 
         <div className="hero-actions">
           <Link to="/store" className="primary-btn">Shop Now</Link>
-          <a href="https://wa.me/27848891554" className="secondary-btn" target="_blank">
+          <a href="https://wa.me/27727174892" className="secondary-btn" target="_blank">
             WhatsApp Us
           </a>
         </div>
