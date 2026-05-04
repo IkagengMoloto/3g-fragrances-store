@@ -1,3 +1,7 @@
+import maleImg from "../assets/products/male.jpg";
+import femaleImg from "../assets/products/female.jpg";
+import unisexImg from "../assets/products/unisex.jpg";
+
 function ProductCard({ product }) {
   const whatsappNumber = "27727174892";
 
@@ -15,10 +19,10 @@ Price: R${product.price}`;
 
   const categoryBg =
     product.category === "Male"
-      ? "/male-bg.png"
+      ? maleImg
       : product.category === "Female"
-      ? "/female-bg.png"
-      : "/unisex-bg.png";
+      ? femaleImg
+      : unisexImg;
 
   return (
     <div className="product-card">

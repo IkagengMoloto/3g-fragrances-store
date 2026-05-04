@@ -14,27 +14,18 @@ function VisitorStats() {
     fetch("https://ipapi.co/json/")
       .then((res) => res.json())
       .then((data) => {
-        const visitorLocation = `${data.city || "Unknown"}, ${
-          data.country_name || "Unknown"
-        }`;
-
-        setLocation(visitorLocation);
-
-        localStorage.setItem("visitorLocation", visitorLocation);
-        localStorage.setItem("lastVisit", new Date().toLocaleString());
+        setLocation(`${data.city}, ${data.country_name}`);
       })
-      .catch(() => {
-        setLocation("Location unavailable");
-      });
+      .catch(() => setLocation("Unavailable"));
   }, []);
 
   return (
     <div className="visitor-stats">
       <h3>Website Stats</h3>
-      <p>Visits from this browser: {visits}</p>
-      <p>Visitor location: {location}</p>
+      <p>Visits: {visits}</p>
+      <p>Location: {location}</p>
     </div>
   );
 }
-import VisitorStats from "../components/VisitorStats";
+
 export default VisitorStats;

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { products } from "../data/products";
 import ProductCard from "../components/ProductCard";
 
+
 function Store() {
   const [category, setCategory] = useState("All");
   const [search, setSearch] = useState("");
