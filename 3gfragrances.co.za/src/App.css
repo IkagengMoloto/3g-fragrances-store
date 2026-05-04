@@ -200,13 +200,16 @@ body {
     gap: 15px;
   }
 
-/* HERO FIXED */
-.luxury-hero {
+.luxury-content {
   position: relative;
-  min-height: calc(100vh - 90px);
-  display: flex;
-  align-items: center;
-  padding: 80px 7%;
-  background-size: cover;
-  background-position: center;
+  max-width: 520px;
+  padding: 28px;
+  border-radius: 20px;
+
+  /* move slightly more left */
+  margin-left: 40px;
+
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  backdrop-filter: blur(4px);
 }
