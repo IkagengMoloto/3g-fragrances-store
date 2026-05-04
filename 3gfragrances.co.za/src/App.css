@@ -311,3 +311,15 @@
   border-radius: 999px;
   font-weight: 800;
 }
+.visitor-stats {
+  margin-top: 30px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  padding: 18px;
+  border-radius: 16px;
+  color: white;
+}
+
+.visitor-stats h3 {
+  color: #d4af37;
+}

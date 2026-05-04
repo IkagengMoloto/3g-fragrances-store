@@ -24,5 +24,5 @@ function Home() {
     </section>
   );
 }
-
+import VisitorStats from "../components/VisitorStats";
 export default Home;
