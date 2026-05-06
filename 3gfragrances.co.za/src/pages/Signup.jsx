@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../firebase";
 
 function Signup({ setUser }) {
   const navigate = useNavigate();
@@ -14,24 +16,31 @@ function Signup({ setUser }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function handleSignup(e) {
+  async function handleSignup(e) {
     e.preventDefault();
 
-    if (!form.name || !form.email || !form.password) {
-      alert("Please complete all fields.");
-      return;
-    }
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        form.email,
+        form.password
+      );
 
-    localStorage.setItem("user", JSON.stringify(form));
-    setUser(form);
-    navigate("/store");
+      await updateProfile(userCredential.user, {
+        displayName: form.name,
+      });
+
+      setUser(userCredential.user);
+      navigate("/store");
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   return (
     <section className="auth-page">
       <form className="auth-card" onSubmit={handleSignup}>
         <h1>Create Account</h1>
-        <p>Join 3G Fragrances and start shopping.</p>
 
         <input
           name="name"

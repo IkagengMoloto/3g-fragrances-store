@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { signOut, onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Cart from "./components/Cart";

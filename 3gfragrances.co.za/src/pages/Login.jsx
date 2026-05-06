@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 function Login({ setUser }) {
   const navigate = useNavigate();
@@ -13,24 +15,20 @@ function Login({ setUser }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function handleLogin(e) {
+  async function handleLogin(e) {
     e.preventDefault();
 
-    const savedUser = JSON.parse(localStorage.getItem("user"));
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        form.email,
+        form.password
+      );
 
-    if (!savedUser) {
-      alert("No account found. Please sign up first.");
-      return;
-    }
-
-    if (
-      savedUser.email === form.email &&
-      savedUser.password === form.password
-    ) {
-      setUser(savedUser);
+      setUser(userCredential.user);
       navigate("/store");
-    } else {
-      alert("Invalid email or password.");
+    } catch (error) {
+      alert("Invalid login details.");
     }
   }
 
@@ -38,7 +36,6 @@ function Login({ setUser }) {
     <section className="auth-page">
       <form className="auth-card" onSubmit={handleLogin}>
         <h1>Login</h1>
-        <p>Welcome back to 3G Fragrances.</p>
 
         <input
           name="email"
