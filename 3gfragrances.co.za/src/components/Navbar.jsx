@@ -10,12 +10,21 @@ function Navbar({ user, logout, cartCount }) {
 
       <div className="nav-links">
         <NavLink to="/">Home</NavLink>
+
         <NavLink to="/store">Store</NavLink>
-        <NavLink to="/cart">Cart ({cartCount})</NavLink>
+
+        {user && (
+          <NavLink to="/cart">
+            Cart ({cartCount})
+          </NavLink>
+        )}
 
         {user ? (
           <>
-            <span className="user-name">Hi, {user.name}</span>
+            <span className="user-name">
+              Hi, {user.displayName || user.email}
+            </span>
+
             <button className="logout-btn" onClick={logout}>
               Logout
             </button>
