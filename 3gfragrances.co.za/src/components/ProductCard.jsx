@@ -16,7 +16,7 @@ Price: R${product.price}`;
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
     message
   )}`;
-
+  
   const bottleImage =
     product.category === "Male"
       ? maleBottle
@@ -57,5 +57,6 @@ Price: R${product.price}`;
     </div>
   );
 }
+<button onClick={() => addToCart(product)}>Add to Cart</button>
 
 export default ProductCard;

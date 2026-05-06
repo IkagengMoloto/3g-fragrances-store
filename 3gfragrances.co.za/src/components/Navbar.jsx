@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-function Navbar({ cartCount }) {
+function Navbar({ user, logout, cartCount }) {
   return (
     <nav className="navbar">
       <div className="brand">
@@ -12,6 +12,20 @@ function Navbar({ cartCount }) {
         <NavLink to="/">Home</NavLink>
         <NavLink to="/store">Store</NavLink>
         <NavLink to="/cart">Cart ({cartCount})</NavLink>
+
+        {user ? (
+          <>
+            <span className="user-name">Hi, {user.name}</span>
+            <button className="logout-btn" onClick={logout}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/signup">Sign Up</NavLink>
+          </>
+        )}
       </div>
     </nav>
   );
