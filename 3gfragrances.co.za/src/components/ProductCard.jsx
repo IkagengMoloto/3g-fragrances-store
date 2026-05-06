@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import maleBottle from "../assets/products/male-bottle.jpg";
 import femaleBottle from "../assets/products/female-bottle.jpg";
 import unisexBottle from "../assets/products/unisex-bottle.jpg";
@@ -24,20 +26,28 @@ Price: R${product.price}`;
       ? femaleBottle
       : unisexBottle;
 
-  return (
-    <div className="product-card">
+  const cardContent = (
+    <>
       <div className="product-image-area">
         <img src={bottleImage} alt={product.name} />
 
         <span className="category-badge">{product.category}</span>
 
-        {product.price >= 400 && <span className="premium-badge">Premium</span>}
+        {product.price >= 400 && (
+          <span className="premium-badge">Premium</span>
+        )}
       </div>
 
       <div className="product-body">
         <h3>{product.name}</h3>
-        <p className="inspired">Inspired by: {product.inspiredBy}</p>
-        <p className="variant">Variant: {product.variant}</p>
+
+        <p className="inspired">
+          Inspired by: {product.inspiredBy}
+        </p>
+
+        <p className="variant">
+          Variant: {product.variant}
+        </p>
 
         <div className="rating">
           ★★★★★ <span>4.8</span>
@@ -51,18 +61,37 @@ Price: R${product.price}`;
 
           {user ? (
             <div className="product-actions">
-              <button onClick={() => addToCart(product)}>Add to Cart</button>
+              <button onClick={() => addToCart(product)}>
+                Add To Cart
+              </button>
 
-              <a href={whatsappLink} target="_blank" rel="noreferrer">
+              <a
+                href={whatsappLink}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
+              >
                 WhatsApp
               </a>
             </div>
           ) : (
-            <p className="login-warning">Login to purchase</p>
+            <div className="signin-overlay">
+              Click product to login & purchase
+            </div>
           )}
         </div>
       </div>
+    </>
+  );
+
+  return user ? (
+    <div className="product-card">
+      {cardContent}
     </div>
+  ) : (
+    <Link to="/login" className="product-card login-card-link">
+      {cardContent}
+    </Link>
   );
 }
 

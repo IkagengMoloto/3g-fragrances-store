@@ -485,3 +485,14 @@ body {
   color: #d4af37;
   font-weight: 800;
 }
+
+.login-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.signin-overlay {
+  color: #d4af37;
+  font-weight: 800;
+  font-size: 14px;
+}
