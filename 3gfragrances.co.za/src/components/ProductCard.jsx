@@ -1,6 +1,6 @@
-import maleImg from "../assets/products/male.jpg";
-import femaleImg from "../assets/products/female.jpg";
-import unisexImg from "../assets/products/unisex.jpg";
+import maleBottle from "../assets/products/male-bottle.jpg";
+import femaleBottle from "../assets/products/female-bottle.jpg";
+import unisexBottle from "../assets/products/unisex-bottle.jpg";
 
 function ProductCard({ product }) {
   const whatsappNumber = "27727174892";
@@ -17,19 +17,17 @@ Price: R${product.price}`;
     message
   )}`;
 
-  const categoryBg =
+  const bottleImage =
     product.category === "Male"
-      ? maleImg
+      ? maleBottle
       : product.category === "Female"
-      ? femaleImg
-      : unisexImg;
+      ? femaleBottle
+      : unisexBottle;
 
   return (
     <div className="product-card">
-      <div
-        className="product-image-wrap"
-        style={{ backgroundImage: `url(${categoryBg})` }}
-      >
+      <div className="product-image-wrap bottle-wrap">
+        <img src={bottleImage} alt={`${product.category} bottle`} />
         <span className="category-badge">{product.category}</span>
       </div>
 
