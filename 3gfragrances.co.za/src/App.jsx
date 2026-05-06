@@ -81,4 +81,13 @@ function App() {
   );
 }
 
+async function logout() {
+  await signOut(auth);
+
+  setUser(null);
+
+  // clear cart on logout
+  setCart([]);
+}
+
 export default App;
