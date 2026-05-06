@@ -2,7 +2,7 @@ import maleBottle from "../assets/products/male-bottle.jpg";
 import femaleBottle from "../assets/products/female-bottle.jpg";
 import unisexBottle from "../assets/products/unisex-bottle.jpg";
 
-function ProductCard({ product }) {
+function ProductCard({ product, addToCart }) {
   const whatsappNumber = "27727174892";
 
   const message = `Hi 3G Fragrances, I would like to order:
@@ -26,9 +26,10 @@ Price: R${product.price}`;
 
   return (
     <div className="product-card">
-      <div className="product-image-wrap bottle-wrap">
-        <img src={bottleImage} alt={`${product.category} bottle`} />
+      <div className="product-image-area">
+        <img src={bottleImage} alt={product.name} />
         <span className="category-badge">{product.category}</span>
+        {product.price >= 400 && <span className="premium-badge">Premium</span>}
       </div>
 
       <div className="product-body">
@@ -36,15 +37,21 @@ Price: R${product.price}`;
         <p className="inspired">Inspired by: {product.inspiredBy}</p>
         <p className="variant">Variant: {product.variant}</p>
 
+        <div className="rating">★★★★★ <span>4.8</span></div>
+
         <div className="product-footer">
           <div>
             <strong>R{product.price}</strong>
             <small>{product.size}</small>
           </div>
 
-          <a href={whatsappLink} target="_blank" rel="noreferrer">
-            Order Now
-          </a>
+          <div className="product-actions">
+            <button onClick={() => addToCart(product)}>Add to Cart</button>
+
+            <a href={whatsappLink} target="_blank" rel="noreferrer">
+              WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </div>
