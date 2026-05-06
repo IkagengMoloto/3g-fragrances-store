@@ -13,13 +13,27 @@ import Signup from "./pages/Signup";
 import "./App.css";
 
 function App() {
-  const [user, setUser] = useState(() => {
-    return JSON.parse(localStorage.getItem("loggedInUser"));
-  });
-
+  const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+
+      if (!currentUser) {
+        setCart([]);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   function addToCart(product) {
+    if (!user) {
+      alert("Please login or sign up before adding products to cart.");
+      return;
+    }
+
     const existingItem = cart.find((item) => item.id === product.id);
 
     if (existingItem) {
@@ -45,14 +59,10 @@ function App() {
     setCart([]);
   }
 
-  function logout() {
-    localStorage.removeItem("loggedInUser");
+  async function logout() {
+    await signOut(auth);
     setUser(null);
-  }
-
-  function handleSetUser(userData) {
-    localStorage.setItem("loggedInUser", JSON.stringify(userData));
-    setUser(userData);
+    setCart([]);
   }
 
   return (
@@ -61,33 +71,33 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/store" element={<Store addToCart={addToCart} />} />
+        <Route
+          path="/store"
+          element={<Store addToCart={addToCart} user={user} />}
+        />
+
         <Route
           path="/cart"
           element={
-            <Cart
-              cart={cart}
-              removeFromCart={removeFromCart}
-              clearCart={clearCart}
-            />
+            user ? (
+              <Cart
+                cart={cart}
+                removeFromCart={removeFromCart}
+                clearCart={clearCart}
+              />
+            ) : (
+              <Login />
+            )
           }
         />
-        <Route path="/login" element={<Login setUser={handleSetUser} />} />
-        <Route path="/signup" element={<Signup setUser={handleSetUser} />} />
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
 
       <Footer />
     </div>
   );
-}
-
-async function logout() {
-  await signOut(auth);
-
-  setUser(null);
-
-  // clear cart on logout
-  setCart([]);
 }
 
 export default App;

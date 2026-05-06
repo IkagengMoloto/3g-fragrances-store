@@ -479,3 +479,9 @@ body {
   color: #d4af37;
   font-weight: 800;
 }
+
+.purchase-notice,
+.login-warning {
+  color: #d4af37;
+  font-weight: 800;
+}

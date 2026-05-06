@@ -2,7 +2,7 @@ import { useState } from "react";
 import { products } from "../data/products";
 import ProductCard from "../components/ProductCard";
 
-function Store({ addToCart }) {
+function Store({ addToCart, user }) {
   const [category, setCategory] = useState("All");
   const [search, setSearch] = useState("");
   const [priceFilter, setPriceFilter] = useState("All");
@@ -32,6 +32,12 @@ function Store({ addToCart }) {
         <h1>Fragrance Store</h1>
         <p>Browse our premium 50ml inspired fragrance collection.</p>
       </div>
+
+      {!user && (
+        <div className="purchase-notice">
+          Please login or sign up to add products to cart or order via WhatsApp.
+        </div>
+      )}
 
       <div className="store-controls">
         <input
@@ -65,6 +71,7 @@ function Store({ addToCart }) {
             <ProductCard
               key={product.id}
               product={product}
+              user={user}
               addToCart={addToCart}
             />
           ))
