@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { signOut, onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -13,20 +11,24 @@ import Signup from "./pages/Signup";
 import "./App.css";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    return JSON.parse(localStorage.getItem("user"));
+  });
+
   const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+  function handleLogin(userData, token) {
+    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("token", token);
+    setUser(userData);
+  }
 
-      if (!currentUser) {
-        setCart([]);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
+  function logout() {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    setUser(null);
+    setCart([]);
+  }
 
   function addToCart(product) {
     if (!user) {
@@ -59,18 +61,13 @@ function App() {
     setCart([]);
   }
 
-  async function logout() {
-    await signOut(auth);
-    setUser(null);
-    setCart([]);
-  }
-
   return (
     <div className="app">
       <Navbar user={user} logout={logout} cartCount={cart.length} />
 
       <Routes>
         <Route path="/" element={<Home />} />
+
         <Route
           path="/store"
           element={<Store addToCart={addToCart} user={user} />}
@@ -86,13 +83,13 @@ function App() {
                 clearCart={clearCart}
               />
             ) : (
-              <Login />
+              <Login onLogin={handleLogin} />
             )
           }
         />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
+        <Route path="/signup" element={<Signup onLogin={handleLogin} />} />
       </Routes>
 
       <Footer />

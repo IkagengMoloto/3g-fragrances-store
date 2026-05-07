@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../firebase";
+import { Link, useNavigate } from "react-router-dom";
 
-function Signup({ setUser }) {
+function Signup({ onLogin }) {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -20,20 +18,25 @@ function Signup({ setUser }) {
     e.preventDefault();
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        form.email,
-        form.password
-      );
-
-      await updateProfile(userCredential.user, {
-        displayName: form.name,
+      const response = await fetch("http://localhost:5000/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
       });
 
-      setUser(userCredential.user);
-      navigate("/store");
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Signup failed");
+        return;
+      }
+
+      alert("Account created successfully. Please login.");
+      navigate("/login");
     } catch (error) {
-      alert(error.message);
+      alert("Backend is not running. Please start node server.js");
     }
   }
 
@@ -41,9 +44,11 @@ function Signup({ setUser }) {
     <section className="auth-page">
       <form className="auth-card" onSubmit={handleSignup}>
         <h1>Create Account</h1>
+        <p>Sign up to shop 3G Fragrances.</p>
 
         <input
           name="name"
+          type="text"
           placeholder="Full name"
           value={form.name}
           onChange={handleChange}

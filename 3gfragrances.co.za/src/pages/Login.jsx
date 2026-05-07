@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { Link, useNavigate } from "react-router-dom";
 
-function Login({ setUser }) {
+function Login({ onLogin }) {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -19,16 +17,25 @@ function Login({ setUser }) {
     e.preventDefault();
 
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        form.email,
-        form.password
-      );
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
 
-      setUser(userCredential.user);
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Login failed");
+        return;
+      }
+
+      onLogin(data.user, data.token);
       navigate("/store");
     } catch (error) {
-      alert("Invalid login details.");
+      alert("Backend is not running. Please start node server.js");
     }
   }
 
@@ -36,6 +43,7 @@ function Login({ setUser }) {
     <section className="auth-page">
       <form className="auth-card" onSubmit={handleLogin}>
         <h1>Login</h1>
+        <p>Login to add products to cart and order.</p>
 
         <input
           name="email"
