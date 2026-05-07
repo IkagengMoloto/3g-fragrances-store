@@ -14,9 +14,11 @@ function Home() {
           <p className="eyebrow">Premium Inspired Fragrances</p>
 
           <h1>
-            Smell Good. <br />
-            Look Good. <br />
-            Be Unforgettable.
+            Smell Good <br />
+            Look  Good <br />
+            Do    Good <br />
+            <br />
+            Be Unforgettable
           </h1>
 
           <p className="hero-text">
