@@ -57,13 +57,77 @@ body {
 
 /* HERO */
 .luxury-hero {
-  position: relative;
-  min-height: calc(100vh - 90px);
+  min-height: 100vh;
   display: flex;
-  align-items: center;
-  padding: 80px 7%;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 140px 6% 60px;
   background-size: cover;
-  background-position: center right;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.luxury-content {
+  max-width: 560px;
+  padding: 40px;
+  border-radius: 28px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  backdrop-filter: blur(10px);
+
+  position: relative;
+  z-index: 2;
+
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.luxury-content h1 {
+  font-size: clamp(52px, 5vw, 82px);
+  line-height: 0.95;
+  margin-bottom: 24px;
+  color: #fff;
+}
+
+.hero-text {
+  font-size: 20px;
+  line-height: 1.8;
+  color: #e5e5e5;
+  margin-bottom: 30px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 16px 30px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 800;
+  transition: 0.3s ease;
+}
+
+.primary-btn {
+  background: #d4af37;
+  color: #111;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+}
+
+.secondary-btn {
+  border: 1px solid #d4af37;
+  color: #d4af37;
+}
+
+.secondary-btn:hover {
+  background: rgba(212, 175, 55, 0.1);
 }
 
 .hero-dark-overlay {
@@ -92,12 +156,6 @@ body {
   text-transform: uppercase;
   letter-spacing: 4px;
   font-weight: 900;
-}
-
-.luxury-content h1 {
-  font-size: clamp(36px, 5vw, 64px);
-  line-height: 1.05;
-  margin: 18px 0;
 }
 
 .hero-text {
