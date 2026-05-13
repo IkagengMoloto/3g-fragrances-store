@@ -711,3 +711,33 @@ body {
     font-size: 12px;
   }
 }
+.admin-page {
+  width: min(1000px, 92%);
+  margin: 0 auto;
+  padding: 50px 0;
+}
+
+.admin-page h1 {
+  color: #d4af37;
+}
+
+.admin-user-card {
+  background: #111;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.admin-user-card button {
+  margin-left: 10px;
+  background: #d4af37;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-weight: 900;
+  cursor: pointer;
+}

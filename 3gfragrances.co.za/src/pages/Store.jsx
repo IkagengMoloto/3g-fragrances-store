@@ -6,8 +6,9 @@ function Store({ addToCart, user }) {
   const [category, setCategory] = useState("All");
   const [search, setSearch] = useState("");
   const [priceFilter, setPriceFilter] = useState("All");
+  const [sort, setSort] = useState("default");
 
-  const filteredProducts = products.filter((product) => {
+  let filteredProducts = products.filter((product) => {
     const matchesCategory =
       category === "All" || product.category === category;
 
@@ -24,6 +25,20 @@ function Store({ addToCart, user }) {
 
     return matchesCategory && matchesSearch && matchesPrice;
   });
+
+  if (sort === "price-low") {
+    filteredProducts = [...filteredProducts].sort((a, b) => a.price - b.price);
+  }
+
+  if (sort === "price-high") {
+    filteredProducts = [...filteredProducts].sort((a, b) => b.price - a.price);
+  }
+
+  if (sort === "name") {
+    filteredProducts = [...filteredProducts].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  }
 
   return (
     <section className="store-page">
@@ -58,10 +73,17 @@ function Store({ addToCart, user }) {
           value={priceFilter}
           onChange={(e) => setPriceFilter(e.target.value)}
         >
-          <option>All</option>
+          <option value="All">All Prices</option>
           <option value="200">Up to R200</option>
           <option value="300">Up to R300</option>
           <option value="400+">R400+</option>
+        </select>
+
+        <select value={sort} onChange={(e) => setSort(e.target.value)}>
+          <option value="default">Default Sort</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="name">Name: A to Z</option>
         </select>
       </div>
 
