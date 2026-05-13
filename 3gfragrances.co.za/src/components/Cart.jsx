@@ -1,3 +1,5 @@
+import PayFastButton from "./PayFastButton";
+
 function Cart({ cart, removeFromCart, clearCart }) {
   const whatsappNumber = "27727174892";
 
@@ -25,6 +27,7 @@ Total: R${total}`;
     return (
       <section className="cart-page">
         <h1>Your Cart</h1>
+
         <p>Your cart is currently empty.</p>
       </section>
     );
@@ -39,13 +42,19 @@ Total: R${total}`;
           <div className="cart-item" key={item.id}>
             <div>
               <h3>{item.name}</h3>
+
               <p>{item.variant}</p>
+
+              <p>{item.size}</p>
+
               <p>
                 R{item.price} x {item.quantity}
               </p>
             </div>
 
-            <button onClick={() => removeFromCart(item.id)}>Remove</button>
+            <button onClick={() => removeFromCart(item.id)}>
+              Remove
+            </button>
           </div>
         ))}
       </div>
@@ -53,11 +62,19 @@ Total: R${total}`;
       <div className="cart-summary">
         <h2>Total: R{total}</h2>
 
-        <a href={checkoutLink} target="_blank" rel="noreferrer">
+        <a
+          href={checkoutLink}
+          target="_blank"
+          rel="noreferrer"
+        >
           Checkout on WhatsApp
         </a>
 
-        <button onClick={clearCart}>Clear Cart</button>
+        <PayFastButton cart={cart} />
+
+        <button onClick={clearCart}>
+          Clear Cart
+        </button>
       </div>
     </section>
   );
