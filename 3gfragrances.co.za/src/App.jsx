@@ -1,53 +1,55 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import AdminUsers from "./pages/AdminUsers";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Cart from "./components/Cart";
+
 import Home from "./pages/Home";
 import Store from "./pages/Store";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+
 import "./App.css";
 
 function App() {
-  const [user, setUser] = useState(() => {
-    return JSON.parse(localStorage.getItem("user"));
-  });
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("loggedInUser"))
+  );
 
   const [cart, setCart] = useState([]);
 
-  function handleLogin(userData, token) {
-    localStorage.setItem("user", JSON.stringify(userData));
-    localStorage.setItem("token", token);
-    setUser(userData);
-  }
-
-  function logout() {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    setUser(null);
-    setCart([]);
-  }
-
   function addToCart(product) {
     if (!user) {
-      alert("Please login or sign up before adding products to cart.");
+      alert("Please login first.");
       return;
     }
 
-    const existingItem = cart.find((item) => item.id === product.id);
+    const existingItem = cart.find(
+      (item) => item.id === product.id
+    );
 
     if (existingItem) {
       setCart(
         cart.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? {
+                ...item,
+                quantity: item.quantity + 1,
+              }
             : item
         )
       );
     } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
+      setCart([
+        ...cart,
+        {
+          ...product,
+          quantity: 1,
+        },
+      ]);
     }
 
     alert(`${product.name} added to cart`);
@@ -61,35 +63,80 @@ function App() {
     setCart([]);
   }
 
+  function logout() {
+    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("token");
+
+    setUser(null);
+    setCart([]);
+  }
+
+  function handleSetUser(userData, token) {
+    localStorage.setItem(
+      "loggedInUser",
+      JSON.stringify(userData)
+    );
+
+    localStorage.setItem("token", token);
+
+    setUser(userData);
+  }
+
   return (
     <div className="app">
-      <Navbar user={user} logout={logout} cartCount={cart.length} />
+      <Navbar
+        user={user}
+        logout={logout}
+        cartCount={cart.length}
+      />
 
       <Routes>
         <Route path="/" element={<Home />} />
 
         <Route
           path="/store"
-          element={<Store addToCart={addToCart} user={user} />}
+          element={
+            <Store
+              addToCart={addToCart}
+              user={user}
+            />
+          }
         />
 
         <Route
           path="/cart"
           element={
-            user ? (
-              <Cart
-                cart={cart}
-                removeFromCart={removeFromCart}
-                clearCart={clearCart}
-              />
-            ) : (
-              <Login onLogin={handleLogin} />
-            )
+            <Cart
+              cart={cart}
+              removeFromCart={removeFromCart}
+              clearCart={clearCart}
+            />
           }
         />
 
-        <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/signup" element={<Signup onLogin={handleLogin} />} />
+        <Route
+          path="/login"
+          element={
+            <Login setUser={handleSetUser} />
+          }
+        />
+
+        <Route
+          path="/signup"
+          element={
+            <Signup setUser={handleSetUser} />
+          }
+        />
+
+        <Route
+          path="/forgot-password"
+          element={<ForgotPassword />}
+        />
+
+        <Route
+          path="/reset-password/:token"
+          element={<ResetPassword />}
+        />
       </Routes>
 
       <Footer />

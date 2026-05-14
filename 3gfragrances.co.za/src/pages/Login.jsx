@@ -62,7 +62,9 @@ function Login({ onLogin }) {
         />
 
         <button type="submit">Login</button>
-
+<p>
+  <a href="/forgot-password">Forgot password?</a>
+</p>
         <p>
           No account? <Link to="/signup">Create one</Link>
         </p>

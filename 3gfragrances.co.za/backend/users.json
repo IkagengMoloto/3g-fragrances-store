@@ -1,17 +1,14 @@
 [
   {
-    "id": 1778688051924,
+    "id": 1778695619846,
+    "name": "David",
+    "email": "tlou@test.com",
+    "password": "$2b$10$6pNNqe2ocAoZ0I6QP8IB7OkBd8LorH9jGzoWaJIviJJ7PtpWMbHKS"
+  },
+  {
+    "id": 1778699232308,
     "name": "3G Fragrances",
     "email": "davidikagengkwapi@gmail.com",
-    "password": "$2b$10$RF3Oa.el2R5sizVX.oagFutUf43nYifNzUg5qihPI/77jCHLktb.6"
-  }
-]
-[
-  {
-    "id": 1,
-    "name": "Admin",
-    "email": "admin@3gfragrances.co.za",
-    "password": "$2a$10$hashedPasswordHere",
-    "role": "admin"
+    "password": "$2b$10$0uS7sDiFCfZKUhx6NcVDXO.WL1jb0.OyIdmtgvGQrRizVT/y7s3nK"
   }
 ]

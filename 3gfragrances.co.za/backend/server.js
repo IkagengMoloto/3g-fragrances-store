@@ -1,3 +1,4 @@
+const nodemailer = require("nodemailer");
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
@@ -170,4 +171,57 @@ app.patch("/api/admin/users/:id/reset-password", verifyAdmin, async (req, res) =
   saveUsers(users);
 
   res.json({ message: "Password reset successfully" });
+});
+
+/* FORGOT PASSWORD */
+app.post("/api/forgot-password", (req, res) => {
+  const { email } = req.body;
+
+  const users = getUsers();
+  const user = users.find(
+    (u) => u.email.toLowerCase() === email.toLowerCase()
+  );
+
+  if (!user) {
+    return res.status(404).json({ message: "Email not found." });
+  }
+
+  const resetToken = jwt.sign(
+    { id: user.id, email: user.email },
+    JWT_SECRET,
+    { expiresIn: "15m" }
+  );
+
+  console.log("Password reset link:");
+  console.log(`http://localhost:5173/reset-password/${resetToken}`);
+
+  res.json({
+    message:
+      "Password reset link generated. Check backend terminal for the reset link.",
+  });
+});
+
+/* RESET PASSWORD */
+app.post("/api/reset-password/:token", async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+
+    const users = getUsers();
+    const user = users.find((u) => u.id === decoded.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    user.password = await bcrypt.hash(password, 10);
+
+    saveUsers(users);
+
+    res.json({ message: "Password reset successful." });
+  } catch (error) {
+    res.status(400).json({ message: "Invalid or expired reset link." });
+  }
 });
